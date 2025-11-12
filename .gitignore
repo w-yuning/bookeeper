@@ -1,0 +1,6 @@
+@"
+build/
+*.user
+*.user.*
+*.pdb
+" | Set-Content -Encoding utf8 .gitignore
