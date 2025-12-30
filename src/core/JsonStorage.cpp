@@ -8,6 +8,7 @@
 
 #include <QFile>
 #include <QJsonDocument>
+#include <QProcessEnvironment>
 #include <QStandardPaths>
 #include <QUuid>
 
@@ -24,6 +25,13 @@ JsonStorage::JsonStorage(const QDir &baseDir) : dataDir_(baseDir) {
 
 // AppDataLocation 可能为空，必要时回退到用户主目录。
 QDir JsonStorage::defaultDataDir() {
+  // 优先使用环境变量 BOOKEEPER_DATA_DIR，便于测试时定向到临时目录。
+  if (qEnvironmentVariableIsSet("BOOKEEPER_DATA_DIR")) {
+    QDir envDir(qEnvironmentVariable("BOOKEEPER_DATA_DIR"));
+    envDir.mkpath(".");
+    return envDir;
+  }
+
   const auto locations =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QDir dir(locations.isEmpty() ? QDir::homePath() : locations);
