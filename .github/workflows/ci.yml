@@ -2,9 +2,10 @@ name: C++ CI (unit only)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "**" ]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -13,11 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Qt 5.15 Core
+      - name: Install Qt 5.15 (qtbase)
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
-          modules: 'qtcore'
+          modules: 'qtbase'
           arch: win64_msvc2019_64
 
       - name: Configure (MSVC Debug)
