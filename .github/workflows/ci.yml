@@ -21,10 +21,10 @@ jobs:
           arch: win64_msvc2019_64
 
       - name: Configure (MSVC Debug)
-        run: cmake -S bookeeper -B bookeeper/build -G "Visual Studio 17 2022" -A x64
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
       - name: Build unit_tests
-        run: cmake --build bookeeper/build --config Debug --target unit_tests
+        run: cmake --build build --config Debug --target unit_tests
 
       - name: Run unit tests
-        run: ctest --test-dir bookeeper/build -C Debug --output-on-failure --tests-regex unit
+        run: ctest --test-dir build -C Debug --output-on-failure --tests-regex unit
